@@ -20,13 +20,13 @@ namespace Rocket.Core.Extensions
         /// <returns>Parsed</returns>
         public static bool IsByte(this CommandArg arg, out byte value)
         {
-            return byte.TryParse(arg.RawValue, NumberStyles.Integer | NumberStyles.HexNumber, Culture, out value);
+            return byte.TryParse(arg.RawValue, NumberStyles.Integer, Culture, out value);
         }
         /// <param name="value">Parsed value</param>
         /// <returns>Parsed</returns>
         public static bool IsSByte(this CommandArg arg, out sbyte value)
         {
-            return sbyte.TryParse(arg.RawValue, NumberStyles.Integer | NumberStyles.HexNumber, Culture, out value);
+            return sbyte.TryParse(arg.RawValue, NumberStyles.Integer, Culture, out value);
         }
         /// <param name="value">Parsed value</param>
         /// <returns>Parsed</returns>
@@ -104,6 +104,21 @@ namespace Rocket.Core.Extensions
             var isDefined = arg.RawValue == null ? false : Enum.IsDefined(typeof(T), arg.RawValue);
             value = isDefined ? (T)Enum.Parse(typeof(T), arg.RawValue) : default;
             return isDefined;
+        }
+        /// <param name="value">Parsed value</param>
+        /// <returns>Parsed</returns>
+        public static bool IsGuid(this CommandArg arg, out Guid value)
+        {
+            try
+            {
+                value = new Guid(arg.RawValue);
+                return true;
+            }
+            catch (FormatException)
+            {
+                value = Guid.Empty;
+                return false;
+            }
         }
     }
 }
