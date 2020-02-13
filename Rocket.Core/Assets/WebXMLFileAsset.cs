@@ -28,7 +28,7 @@ namespace Rocket.Core.Assets
             {
                 if (!waiting)
                 {
-                    Logger.Log(String.Format("Updating WebXMLFileAsset {0} from {1}", typeof(T).Name, url));
+                    Logger.Log($"Updating WebXMLFileAsset {typeof(T).Name} from {url}");
                     waiting = true;
 
                     webclient.DownloadStringCompleted -= handler;
@@ -36,7 +36,7 @@ namespace Rocket.Core.Assets
                     {
                         if (e.Error != null)
                         {
-                            Logger.Log(String.Format("Error retrieving WebXMLFileAsset {0} from {1}: {2}", typeof(T).Name, url, e.Error.Message));
+                            Logger.Log($"Error retrieving WebXMLFileAsset {typeof(T).Name} from {url}: {e.Error.Message}");
                         }
                         else
                         {
@@ -56,7 +56,7 @@ namespace Rocket.Core.Assets
                             }
                             catch (Exception ex)
                             {
-                                Logger.Log(String.Format("Error retrieving WebXMLFileAsset {0} from {1}: {2}", typeof(T).Name, url, ex.Message));
+                                Logger.Log($"Error retrieving WebXMLFileAsset {typeof(T).Name} from {url}: {ex.Message}");
                             }
                         }
 
@@ -72,7 +72,7 @@ namespace Rocket.Core.Assets
             }
             catch (Exception ex)
             {
-                Logger.Log(String.Format("Error retrieving WebXMLFileAsset {0} from {1}: {2}", typeof(T).Name, url, ex.Message));
+                Logger.Log($"Error retrieving WebXMLFileAsset {typeof(T).Name} from {url}: {ex.Message}");
             }
         }
     }

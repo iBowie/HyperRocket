@@ -46,7 +46,7 @@ namespace Rocket.Core.Assets
             }
             catch (Exception ex)
             {
-                throw new Exception(String.Format("Failed to serialize XMLFileAsset: {0}", file), ex);
+                throw new Exception($"Failed to serialize XMLFileAsset: {file}", ex);
             }
         }
 
@@ -69,7 +69,7 @@ namespace Rocket.Core.Assets
             }
             catch (Exception ex)
             {
-                throw new Exception(String.Format("Failed to deserialize XMLFileAsset: {0}", file), ex);
+                throw new Exception($"Failed to deserialize XMLFileAsset: {file}", ex);
             }
         }
         
