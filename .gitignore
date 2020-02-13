@@ -190,3 +190,7 @@ ModelManifest.xml
 
 # IntelliJ Rider 
 .idea/
+.vs/Rocket/v16/Server/sqlite3/db.lock
+.vs/Rocket/v16/Server/sqlite3/storage.ide
+.vs/Rocket/v16/Server/sqlite3/storage.ide-shm
+.vs/Rocket/v16/Server/sqlite3/storage.ide-wal
