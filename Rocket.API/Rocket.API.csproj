@@ -60,6 +60,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdvancedRocketCommand.cs" />
+    <Compile Include="Commands\CommandArg.cs" />
+    <Compile Include="Commands\CommandArgs.cs" />
     <Compile Include="Extensions\GameObjectExtension.cs" />
     <Compile Include="Extensions\RocketCommandExtensions.cs" />
     <Compile Include="IDefaultable.cs" />

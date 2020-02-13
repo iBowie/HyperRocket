@@ -73,6 +73,7 @@
     <Compile Include="Commands\RocketCommandAttribute.cs" />
     <Compile Include="Commands\RocketCommandManager.cs" />
     <Compile Include="Debugger.cs" />
+    <Compile Include="Extensions\CommandArgExtension.cs" />
     <Compile Include="Extensions\IRocketPlayerExtension.cs" />
     <Compile Include="Extensions\MonoBehaviourExtension.cs" />
     <Compile Include="Logging\ELogType.cs" />
