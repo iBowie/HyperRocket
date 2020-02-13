@@ -3,7 +3,6 @@ using Rocket.API.Collections;
 using Rocket.API.Extensions;
 using Rocket.Core.Assets;
 using Rocket.Core.Extensions;
-using Rocket.Core.Logging;
 using System;
 using System.IO;
 using System.Linq;
@@ -14,8 +13,7 @@ namespace Rocket.Core.Plugins
 {
     public class RocketPlugin<RocketPluginConfiguration> : RocketPlugin, IRocketPlugin<RocketPluginConfiguration> where RocketPluginConfiguration : class, IRocketPluginConfiguration
     {
-        private IAsset<RocketPluginConfiguration> configuration;
-        public IAsset<RocketPluginConfiguration> Configuration { get { return configuration; } }
+        public IAsset<RocketPluginConfiguration> Configuration { get; }
 
         public RocketPlugin() : base()
         {
@@ -32,17 +30,17 @@ namespace Rocket.Core.Plugins
             Uri uri;
             if (Uri.TryCreate(url,UriKind.Absolute,out uri))
             {
-                configuration = new WebXMLFileAsset<RocketPluginConfiguration>(uri, null, (IAsset<RocketPluginConfiguration> asset) => { base.LoadPlugin(); });
+                Configuration = new WebXMLFileAsset<RocketPluginConfiguration>(uri, null, (IAsset<RocketPluginConfiguration> asset) => { base.LoadPlugin(); });
             }
             else
             {
-                configuration = new XMLFileAsset<RocketPluginConfiguration>(configurationFile);
+                Configuration = new XMLFileAsset<RocketPluginConfiguration>(configurationFile);
             }
         }
 
         public override void LoadPlugin()
         {
-            configuration.Load((IAsset<RocketPluginConfiguration> asset)=> { base.LoadPlugin(); });
+            Configuration.Load((IAsset<RocketPluginConfiguration> asset)=> { base.LoadPlugin(); });
         }
     }
 
@@ -119,7 +117,7 @@ namespace Rocket.Core.Plugins
 
         public virtual void LoadPlugin()
         {
-            Logging.Logger.Log("\n[loading] " + Name, ConsoleColor.Cyan);
+            Logging.Logger.Log($"\n[loading] {Name}", ConsoleColor.Cyan);
             translations.Load();
             R.Commands.RegisterFromAssembly(Assembly);
 
@@ -129,7 +127,7 @@ namespace Rocket.Core.Plugins
             }
             catch (Exception ex)
             {
-                Logging.Logger.LogError("Failed to load " + Name + ", unloading now... :" + ex.ToString());
+                Logging.Logger.LogError($"Failed to load {Name}, unloading now... :{ex.ToString()}");
                 try
                 {
                     UnloadPlugin(PluginState.Failure);
@@ -137,7 +135,7 @@ namespace Rocket.Core.Plugins
                 }
                 catch (Exception ex1)
                 {
-                    Logging.Logger.LogError("Failed to unload " + Name + ":" + ex1.ToString());
+                    Logging.Logger.LogError($"Failed to unload {Name}:{ex1.ToString()}");
                 }
             }
             
@@ -162,7 +160,7 @@ namespace Rocket.Core.Plugins
                         }
                         catch (Exception ex1)
                         {
-                            Logging.Logger.LogError("Failed to unload " + Name + ":" + ex1.ToString());
+                            Logging.Logger.LogError($"Failed to unload {Name}:{ex1.ToString()}");
                         }
                     }
                 }
@@ -172,7 +170,7 @@ namespace Rocket.Core.Plugins
 
         public virtual void UnloadPlugin(PluginState state = PluginState.Unloaded)
         {
-            Logging.Logger.Log("\n[unloading] " + Name, ConsoleColor.Cyan);
+            Logging.Logger.Log($"\n[unloading] {Name}", ConsoleColor.Cyan);
             OnPluginUnloading.TryInvoke(this);
             R.Commands.DeregisterFromAssembly(Assembly);
             Unload();
