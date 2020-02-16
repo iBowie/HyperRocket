@@ -33,6 +33,9 @@ namespace Rocket.Core
         public static readonly string PluginTranslationFileTemplate = "{0}.{1}.translation.xml";
         public static readonly string PluginConfigurationFileTemplate = "{0}.configuration.xml";
 
+        public static readonly string HyperPluginTranslationFileTemplate = "{0}.{1}.translation.json";
+        public static readonly string HyperPluginConfigurationFileTemplate = "{0}.configuration.json";
+
         public static readonly string WebConfigurationTemplate = "{0}?configuration={1}&instance={2}";
     }
 }

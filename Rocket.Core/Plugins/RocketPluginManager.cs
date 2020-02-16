@@ -45,7 +45,7 @@ namespace Rocket.Core.Plugins
                 }
                 else
                 {
-                    Logging.Logger.LogError("Could not find dependency: " + args.Name);
+                    Logging.Logger.LogError($"Could not find dependency: {args.Name}");
                 }
                 return null;
             };
@@ -126,17 +126,17 @@ namespace Rocket.Core.Plugins
 
                     if (types.Count == 1)
                     {
-                        Logging.Logger.Log("Loading "+ assembly.GetName().Name +" from "+ assembly.Location);
+                        Logging.Logger.Log($"Loading {assembly.GetName().Name} from {assembly.Location}");
                         assemblies.Add(assembly);
                     }
                     else
                     {
-                        Logging.Logger.LogError("Invalid or outdated plugin assembly: " + assembly.GetName().Name);
+                        Logging.Logger.LogError($"Invalid or outdated plugin assembly: {assembly.GetName().Name}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Logging.Logger.LogError(ex, "Could not load plugin assembly: " + library.Name);
+                    Logging.Logger.LogError(ex, $"Could not load plugin assembly: {library.Name}");
                 }
             }
             return assemblies;
