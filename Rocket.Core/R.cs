@@ -24,8 +24,8 @@ namespace Rocket.Core
         public static R Instance;
         public static IRocketImplementation Implementation;
 
-        public static XMLFileAsset<RocketSettings> Settings = null;
-        public static XMLFileAsset<TranslationList> Translation = null;
+        public static Asset<RocketSettings> Settings = null;
+        public static Asset<TranslationList> Translation = null;
         public static IRocketPermissionsProvider Permissions = null;
         public static RocketPluginManager Plugins = null;
         public static RocketCommandManager Commands = null;
@@ -69,7 +69,7 @@ namespace Rocket.Core
                     if(Settings.Instance.RCON.Enabled) gameObject.TryAddComponent<RCONServer>();
                 };
                 
-                Settings = new XMLFileAsset<RocketSettings>(Environment.SettingsFile);
+                Settings = new JSONFileAsset<RocketSettings>(Environment.SettingsFile);
                 Translation = new XMLFileAsset<TranslationList>(String.Format(Environment.TranslationFile, Settings.Instance.LanguageCode), new Type[] { typeof(TranslationList), typeof(TranslationListEntry) }, defaultTranslations);
                 defaultTranslations.AddUnknownEntries(Translation);
                 Permissions = gameObject.TryAddComponent<RocketPermissionsManager>();
