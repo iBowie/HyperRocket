@@ -1,8 +1,6 @@
-﻿using Rocket.Core.Assets;
-using System.Xml.Serialization;
-using System;
-using Rocket.API;
-using System.Collections.Generic;
+﻿using Rocket.API;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Rocket.Core.Serialization
 {
@@ -10,60 +8,61 @@ namespace Rocket.Core.Serialization
 
     public sealed class RemoteConsole
     {
-        [XmlAttribute]
+        [JsonProperty("enabled")]
         public bool Enabled = false;
-        [XmlAttribute]
+        [JsonProperty("port")]
         public ushort Port = 27115;
-        [XmlAttribute]
+        [JsonProperty("password")]
         public string Password = "changeme";
-        [XmlAttribute]
+        [JsonProperty("enableMaxGlobalConnections")]
         public bool EnableMaxGlobalConnections = true;
-        [XmlAttribute]
+        [JsonProperty("maxGlobalConnections")]
         public ushort MaxGlobalConnections = 10;
-        [XmlAttribute]
+        [JsonProperty("enableMaxLocalConnections")]
         public bool EnableMaxLocalConnections = true;
-        [XmlAttribute]
+        [JsonProperty("maxLocalConnections")]
         public ushort MaxLocalConnections = 3;
     }
 
     public sealed class AutomaticShutdown
     {
-        [XmlAttribute]
+        [JsonProperty("enabled")]
         public bool Enabled = false;
-        [XmlAttribute]
+        [JsonProperty("interval")]
         public int Interval = 86400;
     }
 
     public sealed class WebPermissions
     {
-        [XmlAttribute]
+        [JsonProperty("enabled")]
         public bool Enabled = false;
-        [XmlAttribute]
+        [JsonProperty("url")]
         public string Url = "";
-        [XmlAttribute]
+        [JsonProperty("interval")]
         public int Interval = 180;
     }
 
     public sealed class WebConfigurations
     {
-        [XmlAttribute]
+        [JsonProperty("enabled")]
         public bool Enabled = false;
-        [XmlAttribute]  
+        [JsonProperty("url")]
         public string Url = "";
     }
 
     public sealed class CommandMapping
     {
-        [XmlAttribute]
+        [JsonProperty("name")]
         public string Name = "";
 
-        [XmlAttribute]
+        [JsonProperty("enabled")]
         public bool Enabled = true;
 
-        [XmlAttribute]
+        [JsonProperty("priority")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public CommandPriority Priority = CommandPriority.Normal;
 
-        [XmlText]
+        [JsonProperty("class")]
         public string Class = "";
         public CommandMapping()
         {
@@ -81,23 +80,26 @@ namespace Rocket.Core.Serialization
 
     public sealed class RocketSettings : IDefaultable
     {
-        [XmlElement("RCON")]
+        [JsonProperty("rcon")]
         public RemoteConsole RCON = new RemoteConsole();
 
-        [XmlElement("AutomaticShutdown")]
+        [JsonProperty("automaticShutdown")]
         public AutomaticShutdown AutomaticShutdown = new AutomaticShutdown();
 
-        [XmlElement("WebConfigurations")]
+        [JsonProperty("webConfigurations")]
         public WebConfigurations WebConfigurations = new WebConfigurations();
 
-        [XmlElement("WebPermissions")]
+        [JsonProperty("webPermissions")]
         public WebPermissions WebPermissions = new WebPermissions();
 
-        [XmlElement("LanguageCode")]
+        [JsonProperty("languageCode")]
         public string LanguageCode = "en";
 
-        [XmlElement("MaxFrames")]
+        [JsonProperty("maxFrames")]
         public int MaxFrames = 60;
+
+        [JsonProperty("forceJSON")]
+        public bool ForceJSON { get; set; }
         
         public void LoadDefaults()
         {
@@ -107,6 +109,7 @@ namespace Rocket.Core.Serialization
             WebPermissions = new WebPermissions();
             LanguageCode = "en";
             MaxFrames = 60;
+            ForceJSON = true;
         }
     }
 }
