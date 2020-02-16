@@ -28,7 +28,7 @@ namespace Rocket.Core.Assets
             try
             {
                 string directory = Path.GetDirectoryName(file);
-                if (string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+                if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
                 using (StreamWriter writer = new StreamWriter(file))
                 {
@@ -66,6 +66,11 @@ namespace Rocket.Core.Assets
                         instance = JsonConvert.DeserializeObject<T>(content, settings);
                     }
                 }
+
+                Save();
+
+                if (callback != null)
+                    callback(this);
             }
             catch (Exception ex)
             {
