@@ -17,7 +17,11 @@ namespace Rocket.Core.Plugins
 
         public RocketPlugin() : base()
         {
-            string configurationFile = Path.Combine(Directory, string.Format(Core.Environment.PluginConfigurationFileTemplate, Name));
+            string configurationFile;
+            if (R.Settings.Instance.ForceJSON)
+                configurationFile = Path.Combine(Directory, string.Format(Core.Environment.HyperPluginConfigurationFileTemplate, Name));
+            else
+                configurationFile = Path.Combine(Directory, string.Format(Core.Environment.PluginConfigurationFileTemplate, Name));
 
             string url = "";
             
@@ -28,13 +32,19 @@ namespace Rocket.Core.Plugins
             }
 
             Uri uri;
-            if (Uri.TryCreate(url,UriKind.Absolute,out uri))
+            if (Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
-                Configuration = new WebXMLFileAsset<RocketPluginConfiguration>(uri, null, (IAsset<RocketPluginConfiguration> asset) => { base.LoadPlugin(); });
+                if (R.Settings.Instance.ForceJSON)
+                    Configuration = new WebJSONFileAsset<RocketPluginConfiguration>(uri, (IAsset<RocketPluginConfiguration> asset) => { base.LoadPlugin(); });
+                else
+                    Configuration = new WebXMLFileAsset<RocketPluginConfiguration>(uri, null, (IAsset<RocketPluginConfiguration> asset) => { base.LoadPlugin(); });
             }
             else
             {
-                Configuration = new XMLFileAsset<RocketPluginConfiguration>(configurationFile);
+                if (R.Settings.Instance.ForceJSON)
+                    Configuration = new JSONFileAsset<RocketPluginConfiguration>(configurationFile);
+                else
+                    Configuration = new XMLFileAsset<RocketPluginConfiguration>(configurationFile);
             }
         }
 
@@ -52,7 +62,7 @@ namespace Rocket.Core.Plugins
         public delegate void PluginLoading(IRocketPlugin plugin, ref bool cancelLoading);
         public static event PluginLoading OnPluginLoading;
 
-        private XMLFileAsset<TranslationList> translations;
+        private Asset<TranslationList> translations;
         public IAsset<TranslationList> Translations { get { return translations; } }
 
         private PluginState state = PluginState.Unloaded;
@@ -86,7 +96,7 @@ namespace Rocket.Core.Plugins
 
             if (DefaultTranslations != null | DefaultTranslations.Count() != 0)
             {
-                translations = new XMLFileAsset<TranslationList>(Path.Combine(Directory,String.Format(Environment.PluginTranslationFileTemplate, Name, R.Settings.Instance.LanguageCode)), new Type[] { typeof(TranslationList), typeof(TranslationListEntry) }, DefaultTranslations);
+                translations = new XMLFileAsset<TranslationList>(Path.Combine(Directory, String.Format(Environment.PluginTranslationFileTemplate, Name, R.Settings.Instance.LanguageCode)), new Type[] { typeof(TranslationList), typeof(TranslationListEntry) }, DefaultTranslations);
                 DefaultTranslations.AddUnknownEntries(translations);
             }
         }
