@@ -29,10 +29,10 @@ namespace Rocket.API.Serialisation
         public string DisplayName;
 
         [XmlElement("Prefix")]
-        public string Prefix ="";
+        public string Prefix = "";
 
         [XmlElement("Suffix")]
-        public string Suffix ="";
+        public string Suffix = "";
 
         [XmlElement("Color")]
         public string Color = "white";
@@ -55,8 +55,10 @@ namespace Rocket.API.Serialisation
         private List<Permission> permissions;
         public List<Permission> Permissions
         {
-            get {
-                if (OldPermissions != null) {
+            get
+            {
+                if (OldPermissions != null)
+                {
                     if (permissions == null) permissions = new List<Permission>();
                     permissions.AddRange(OldPermissions);
                     OldPermissions = null;

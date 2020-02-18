@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Collections.ObjectModel;
-using UnityEngine;
-using Rocket.API;
-using System.Text.RegularExpressions;
-using System.Reflection;
-using Rocket.Core.Utils;
-using Rocket.Core.Logging;
-using Rocket.Core.Serialization;
-using Rocket.Core.Assets;
-using Rocket.Core.Permissions;
+﻿using Rocket.API;
 using Rocket.API.Serialisation;
+using Rocket.Core.Assets;
+using Rocket.Core.Serialization;
+using Rocket.Core.Utils;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace Rocket.Core.Commands
 {
@@ -45,7 +43,8 @@ namespace Rocket.Core.Commands
             checkDuplicateCommandMappings();
         }
 
-        private void checkDuplicateCommandMappings(string classname = null) {
+        private void checkDuplicateCommandMappings(string classname = null)
+        {
             foreach (CommandMapping mapping in (classname == null) ? commandMappings.Instance.CommandMappings : commandMappings.Instance.CommandMappings.Where(cm => cm.Class == classname))
             {
                 string n = mapping.Name.ToLower();
@@ -54,7 +53,7 @@ namespace Rocket.Core.Commands
                 if (mapping.Enabled)
                     foreach (CommandMapping otherMappings in commandMappings.Instance.CommandMappings.Where(m => m.Name.ToLower() == n && m.Enabled && m.Class.ToLower() != c))
                     {
-                        Logging.Logger.Log("Other mapping to: "+otherMappings.Class+" / "+mapping.Class);
+                        Logging.Logger.Log("Other mapping to: " + otherMappings.Class + " / " + mapping.Class);
                         if (otherMappings.Priority > mapping.Priority)
                         {
                             mapping.Enabled = false;
@@ -75,29 +74,29 @@ namespace Rocket.Core.Commands
 
         private IRocketCommand GetCommand(IRocketCommand command)
         {
-           return GetCommand(command.Name);
+            return GetCommand(command.Name);
         }
 
         public IRocketCommand GetCommand(string command)
         {
             IRocketCommand foundCommand = commands.Where(c => c.Name.ToLower() == command.ToLower()).FirstOrDefault();
-            if(foundCommand == null) commands.Where(c => c.Aliases.Select(a => a.ToLower()).Contains(command.ToLower())).FirstOrDefault();
+            if (foundCommand == null) commands.Where(c => c.Aliases.Select(a => a.ToLower()).Contains(command.ToLower())).FirstOrDefault();
             return foundCommand;
         }
 
-        private static string getCommandIdentity(IRocketCommand command,string name)
+        private static string getCommandIdentity(IRocketCommand command, string name)
         {
             if (command is RocketAttributeCommand)
             {
-                return ((RocketAttributeCommand)command).Method.ReflectedType.FullName+"/"+ name;
+                return ((RocketAttributeCommand)command).Method.ReflectedType.FullName + "/" + name;
             }
-            else if(command.GetType().ReflectedType != null)
+            else if (command.GetType().ReflectedType != null)
             {
                 return command.GetType().ReflectedType.FullName + "/" + name;
             }
             else
             {
-                return command.GetType().FullName+"/"+ name;
+                return command.GetType().FullName + "/" + name;
             }
         }
 
@@ -128,7 +127,7 @@ namespace Rocket.Core.Commands
 
             public int GetHashCode(CommandMapping obj)
             {
-                return (obj.Name.ToLower()+obj.Class.ToLower()).GetHashCode();
+                return (obj.Name.ToLower() + obj.Class.ToLower()).GetHashCode();
             }
         }
         public bool Register(IRocketCommand command)
@@ -146,16 +145,17 @@ namespace Rocket.Core.Commands
         {
             string name = command.Name;
             if (alias != null) name = alias;
-            string className = getCommandIdentity(command,name);
+            string className = getCommandIdentity(command, name);
 
 
             //Add CommandMapping if not already existing
-            if(commandMappings.Instance.CommandMappings.Where(m => m.Class == className && m.Name == name).FirstOrDefault() == null){
-                commandMappings.Instance.CommandMappings.Add(new CommandMapping(name,className,true,priority));
+            if (commandMappings.Instance.CommandMappings.Where(m => m.Class == className && m.Name == name).FirstOrDefault() == null)
+            {
+                commandMappings.Instance.CommandMappings.Add(new CommandMapping(name, className, true, priority));
             }
             checkDuplicateCommandMappings(className);
 
-            foreach(CommandMapping mapping in commandMappings.Instance.CommandMappings.Where(m => m.Class == className && m.Enabled))
+            foreach (CommandMapping mapping in commandMappings.Instance.CommandMappings.Where(m => m.Class == className && m.Enabled))
             {
                 commands.Add(new RegisteredRocketCommand(mapping.Name.ToLower(), command));
                 Logging.Logger.Log("[registered] /" + mapping.Name.ToLower() + " (" + mapping.Class + ")", ConsoleColor.Green);
@@ -180,7 +180,7 @@ namespace Rocket.Core.Commands
             }
             else
             {
-                return  c.ApplyingPermission.Cooldown - (uint)timeSinceExecution;
+                return c.ApplyingPermission.Cooldown - (uint)timeSinceExecution;
             }
         }
 
@@ -218,7 +218,7 @@ namespace Rocket.Core.Commands
                         Logging.Logger.Log("This command can only be called from console");
                         return false;
                     }
-                    if(cooldown != -1)
+                    if (cooldown != -1)
                     {
                         Logging.Logger.Log("This command is still on cooldown");
                         return false;
@@ -277,14 +277,14 @@ namespace Rocket.Core.Commands
             List<Type> commands = RocketHelper.GetTypesFromInterface(assembly, "IRocketCommand");
             foreach (Type commandType in commands)
             {
-                if(commandType.GetConstructor(Type.EmptyTypes) != null)
+                if (commandType.GetConstructor(Type.EmptyTypes) != null)
                 {
                     IRocketCommand command = (IRocketCommand)Activator.CreateInstance(commandType);
                     Register(command);
 
-                    foreach(string alias in command.Aliases)
+                    foreach (string alias in command.Aliases)
                     {
-                        Register(command,alias);
+                        Register(command, alias);
                     }
                 }
             }
@@ -331,14 +331,14 @@ namespace Rocket.Core.Commands
                 }
             }
         }
-        
+
         public class RegisteredRocketCommand : IRocketCommand
         {
             public Type Type;
             public IRocketCommand Command;
             private string name;
 
-            public RegisteredRocketCommand(string name,IRocketCommand command)
+            public RegisteredRocketCommand(string name, IRocketCommand command)
             {
                 this.name = name;
                 Command = command;
@@ -402,7 +402,7 @@ namespace Rocket.Core.Commands
 
         internal class RocketAttributeCommand : IRocketCommand
         {
-            internal RocketAttributeCommand(string Name,string Help,string Syntax,AllowedCaller AllowedCaller,List<string>Permissions,List<string>Aliases,MethodInfo Method)
+            internal RocketAttributeCommand(string Name, string Help, string Syntax, AllowedCaller AllowedCaller, List<string> Permissions, List<string> Aliases, MethodInfo Method)
             {
                 name = Name;
                 help = Help;
@@ -414,7 +414,7 @@ namespace Rocket.Core.Commands
             }
 
             private List<string> aliases;
-            public List<string> Aliases{ get { return aliases; } }
+            public List<string> Aliases { get { return aliases; } }
 
             private AllowedCaller allowedCaller;
             public AllowedCaller AllowedCaller { get { return allowedCaller; } }

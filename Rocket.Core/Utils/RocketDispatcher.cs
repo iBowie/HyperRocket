@@ -1,5 +1,4 @@
-﻿using Rocket.Core.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -61,9 +60,9 @@ namespace Rocket.Core.Utils
             {
                 ((Action)action)();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Logging.Logger.LogException(ex,"Error while running action");
+                Logging.Logger.LogException(ex, "Error while running action");
             }
             finally
             {

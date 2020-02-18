@@ -138,8 +138,8 @@ namespace Rocket.Core.Permissions
                     if (permission.Name.StartsWith("-"))
                     {
                         result.RemoveAll(x => string.Equals(x.Name, permission.Name.Substring(1), StringComparison.InvariantCultureIgnoreCase));
-                    } 
-                    else 
+                    }
+                    else
                     {
                         result.RemoveAll(x => x.Name == permission.Name);
                         result.Add(permission);

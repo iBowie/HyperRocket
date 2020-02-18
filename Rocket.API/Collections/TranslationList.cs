@@ -23,18 +23,20 @@ namespace Rocket.API.Collections
         public TranslationListEntry() { }
     }
 
-    public static class TranslationListExtension{
+    public static class TranslationListExtension
+    {
         public static void AddUnknownEntries(this TranslationList defaultTranslations, IAsset<TranslationList> translations)
         {
             bool hasChanged = false;
-            foreach(TranslationListEntry entry in defaultTranslations)
+            foreach (TranslationListEntry entry in defaultTranslations)
             {
-                if (translations.Instance[entry.Id] == null) {
+                if (translations.Instance[entry.Id] == null)
+                {
                     translations.Instance.Add(entry);
                     hasChanged = true;
                 }
             }
-            if(hasChanged)
+            if (hasChanged)
                 translations.Save();
         }
     }
@@ -92,7 +94,7 @@ namespace Rocket.API.Collections
         {
             string value = this[translationKey];
             if (String.IsNullOrEmpty(value)) return translationKey;
-                
+
             if (value.Contains("{") && value.Contains("}") && placeholder != null && placeholder.Length != 0)
             {
                 for (int i = 0; i < placeholder.Length; i++)
@@ -106,7 +108,7 @@ namespace Rocket.API.Collections
 
         public virtual void LoadDefaults()
         {
-            
+
         }
     }
 }

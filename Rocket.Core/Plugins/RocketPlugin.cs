@@ -20,10 +20,13 @@ namespace Rocket.Core.Plugins
             string configurationFile = Path.Combine(Directory, string.Format(Core.Environment.PluginConfigurationFileTemplate, Name));
 
             string url = "";
-            
-            if (Core.R.Settings.Instance.WebConfigurations.Enabled) {
+
+            if (Core.R.Settings.Instance.WebConfigurations.Enabled)
+            {
                 url = string.Format(Environment.WebConfigurationTemplate, Core.R.Settings.Instance.WebConfigurations.Url, Name, R.Implementation.InstanceId);
-            }else if (File.Exists(configurationFile)) { 
+            }
+            else if (File.Exists(configurationFile))
+            {
                 url = File.ReadAllLines(configurationFile).First().Trim();
             }
 
@@ -40,7 +43,7 @@ namespace Rocket.Core.Plugins
 
         public override void LoadPlugin()
         {
-            Configuration.Load((IAsset<RocketPluginConfiguration> asset)=> { base.LoadPlugin(); });
+            Configuration.Load((IAsset<RocketPluginConfiguration> asset) => { base.LoadPlugin(); });
         }
     }
 
@@ -96,17 +99,17 @@ namespace Rocket.Core.Plugins
             return Rocket.Core.R.Plugins.GetPlugin(plugin) != null;
         }
 
-        public delegate void ExecuteDependencyCodeDelegate(IRocketPlugin plugin); 
-        public static void ExecuteDependencyCode(string plugin,ExecuteDependencyCodeDelegate a)
+        public delegate void ExecuteDependencyCodeDelegate(IRocketPlugin plugin);
+        public static void ExecuteDependencyCode(string plugin, ExecuteDependencyCodeDelegate a)
         {
             IRocketPlugin p = Rocket.Core.R.Plugins.GetPlugin(plugin);
-            if (p != null) 
+            if (p != null)
                 a(p);
         }
 
         public string Translate(string translationKey, params object[] placeholder)
         {
-            return Translations.Instance.Translate(translationKey,placeholder);
+            return Translations.Instance.Translate(translationKey, placeholder);
         }
 
         public void ReloadPlugin()
@@ -138,7 +141,7 @@ namespace Rocket.Core.Plugins
                     Logging.Logger.LogError($"Failed to unload {Name}:{ex1.ToString()}");
                 }
             }
-            
+
             bool cancelLoading = false;
             if (OnPluginLoading != null)
             {
@@ -152,7 +155,8 @@ namespace Rocket.Core.Plugins
                     {
                         Logging.Logger.LogException(ex);
                     }
-                    if (cancelLoading) {
+                    if (cancelLoading)
+                    {
                         try
                         {
                             UnloadPlugin(PluginState.Cancelled);
@@ -179,7 +183,7 @@ namespace Rocket.Core.Plugins
 
         private void OnEnable()
         {
-                LoadPlugin();
+            LoadPlugin();
         }
 
         private void OnDisable()

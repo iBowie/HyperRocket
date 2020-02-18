@@ -1,10 +1,8 @@
 ﻿using Rocket.API;
 using Rocket.API.Serialisation;
 using Rocket.Core.Assets;
-using Rocket.Core.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Rocket.Core.Permissions
@@ -34,7 +32,7 @@ namespace Rocket.Core.Permissions
                 Logging.Logger.LogException(ex);
             }
         }
-        
+
         private bool updateWebPermissions = false;
         private DateTime lastWebPermissionsUpdate;
 
@@ -46,7 +44,8 @@ namespace Rocket.Core.Permissions
                 {
                     lastWebPermissionsUpdate = DateTime.Now;
                     updateWebPermissions = false;
-                    helper.permissions.Load((IAsset<RocketPermissions> asset) => {
+                    helper.permissions.Load((IAsset<RocketPermissions> asset) =>
+                    {
                         updateWebPermissions = true;
                     });
                 }
@@ -78,14 +77,14 @@ namespace Rocket.Core.Permissions
             return helper.GetPermissions(player);
         }
 
-        public List<Permission> GetPermissions(IRocketPlayer player,List<string> requestedPermissions)
+        public List<Permission> GetPermissions(IRocketPlayer player, List<string> requestedPermissions)
         {
             return helper.GetPermissions(player, requestedPermissions);
         }
 
-        public RocketPermissionsProviderResult AddPlayerToGroup(string groupId,IRocketPlayer player)
+        public RocketPermissionsProviderResult AddPlayerToGroup(string groupId, IRocketPlayer player)
         {
-            return helper.AddPlayerToGroup(groupId,player);
+            return helper.AddPlayerToGroup(groupId, player);
         }
 
         public RocketPermissionsProviderResult RemovePlayerFromGroup(string groupId, IRocketPlayer player)

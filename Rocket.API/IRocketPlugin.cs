@@ -1,5 +1,4 @@
 ﻿using Rocket.API.Collections;
-using UnityEngine;
 
 namespace Rocket.API
 {
@@ -7,7 +6,7 @@ namespace Rocket.API
 
     public interface IRocketPlugin<TConfiguration> : IRocketPlugin where TConfiguration : class
     {
-        IAsset<TConfiguration> Configuration { get;}
+        IAsset<TConfiguration> Configuration { get; }
     }
 
     public interface IRocketPlugin

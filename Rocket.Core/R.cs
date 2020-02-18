@@ -1,18 +1,17 @@
-﻿using System;
-using UnityEngine;
-using Rocket.Core.RCON;
-using Rocket.API;
-using Rocket.Core.Plugins;
-using Rocket.Core.Permissions;
-using Rocket.Core.Utils;
-using Rocket.Core.Assets;
-using Rocket.API.Extensions;
-using Rocket.Core.Serialization;
+﻿using Rocket.API;
 using Rocket.API.Collections;
-using Rocket.Core.Extensions;
-using Rocket.Core.Logging;
+using Rocket.API.Extensions;
+using Rocket.Core.Assets;
 using Rocket.Core.Commands;
+using Rocket.Core.Extensions;
+using Rocket.Core.Permissions;
+using Rocket.Core.Plugins;
+using Rocket.Core.RCON;
+using Rocket.Core.Serialization;
+using Rocket.Core.Utils;
+using System;
 using System.Reflection;
+using UnityEngine;
 
 namespace Rocket.Core
 {
@@ -29,7 +28,7 @@ namespace Rocket.Core
         public static IRocketPermissionsProvider Permissions = null;
         public static RocketPluginManager Plugins = null;
         public static RocketCommandManager Commands = null;
-        
+
         private static readonly TranslationList defaultTranslations = new TranslationList(){
                 {"rocket_join_public","{0} connected to the server" },
                 {"rocket_leave_public","{0} disconnected from the server"},
@@ -43,22 +42,22 @@ namespace Rocket.Core
                 {"command_no_permission","You do not have permissions to execute this command."},
                 {"command_cooldown","You have to wait {0} seconds before you can use this command again."}
         };
-         
+
         private void Awake()
         {
             Instance = this;
 
             Implementation = (IRocketImplementation)GetComponent(typeof(IRocketImplementation));
 
-            #if DEBUG
+#if DEBUG
                 gameObject.TryAddComponent<Debugger>();
-            #else
-                Initialize();
-            #endif
+#else
+            Initialize();
+#endif
         }
 
         internal void Initialize()
-        {   
+        {
             Environment.Initialize();
             try
             {
@@ -66,9 +65,9 @@ namespace Rocket.Core
                 {
                     gameObject.TryAddComponent<TaskDispatcher>();
                     gameObject.TryAddComponent<AutomaticShutdownWatchdog>();
-                    if(Settings.Instance.RCON.Enabled) gameObject.TryAddComponent<RCONServer>();
+                    if (Settings.Instance.RCON.Enabled) gameObject.TryAddComponent<RCONServer>();
                 };
-                
+
                 Settings = new XMLFileAsset<RocketSettings>(Environment.SettingsFile);
                 Translation = new XMLFileAsset<TranslationList>(String.Format(Environment.TranslationFile, Settings.Instance.LanguageCode), new Type[] { typeof(TranslationList), typeof(TranslationListEntry) }, defaultTranslations);
                 defaultTranslations.AddUnknownEntries(Translation);

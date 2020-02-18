@@ -1,8 +1,4 @@
-﻿using Rocket.API.Serialisation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 
 namespace Rocket.API
 {
@@ -19,7 +15,7 @@ namespace Rocket.API
         {
             get
             {
-               return "The player " + player.DisplayName + " has no permission to execute the command " + command.Name;
+                return "The player " + player.DisplayName + " has no permission to execute the command " + command.Name;
             }
         }
     }

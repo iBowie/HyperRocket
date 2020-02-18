@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace Rocket.API
 {
-    public enum RocketPermissionsProviderResult { Success, UnspecifiedError, DuplicateEntry, GroupNotFound,PlayerNotFound };
+    public enum RocketPermissionsProviderResult { Success, UnspecifiedError, DuplicateEntry, GroupNotFound, PlayerNotFound };
 
     public static class IRocketPermissionsProviderExtensions
     {
-        public static bool HasPermission(this IRocketPermissionsProvider rocketPermissionProvider,IRocketPlayer player, string permission)
+        public static bool HasPermission(this IRocketPermissionsProvider rocketPermissionProvider, IRocketPlayer player, string permission)
         {
             return rocketPermissionProvider.HasPermission(player, new List<string>() { permission });
         }

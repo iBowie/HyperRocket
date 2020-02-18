@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Rocket.API;
+﻿using Rocket.API;
+using System;
 
 namespace Rocket.Core.Commands
 {
@@ -44,7 +41,7 @@ namespace Rocket.Core.Commands
         readonly string syntax;
         readonly AllowedCaller allowedCaller;
 
-        public RocketCommandAttribute(string Name,string Help,string Syntax = "", AllowedCaller AllowedCaller = AllowedCaller.Both)
+        public RocketCommandAttribute(string Name, string Help, string Syntax = "", AllowedCaller AllowedCaller = AllowedCaller.Both)
         {
             name = Name;
             help = Help;

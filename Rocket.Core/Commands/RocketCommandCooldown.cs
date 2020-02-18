@@ -1,9 +1,6 @@
 ﻿using Rocket.API;
 using Rocket.API.Serialisation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Rocket.Core.Commands
 {
@@ -14,7 +11,7 @@ namespace Rocket.Core.Commands
         public IRocketCommand Command;
         public Permission ApplyingPermission;
 
-        public RocketCommandCooldown(IRocketPlayer player, IRocketCommand command,Permission applyingPermission)
+        public RocketCommandCooldown(IRocketPlayer player, IRocketCommand command, Permission applyingPermission)
         {
             Player = player;
             Command = command;

@@ -67,7 +67,7 @@ namespace Rocket.Core.Serialization
 
         }
 
-        public CommandMapping(string name,string @class, bool enabled = true, CommandPriority priority = CommandPriority.Normal)
+        public CommandMapping(string name, string @class, bool enabled = true, CommandPriority priority = CommandPriority.Normal)
         {
             Name = name;
             Enabled = enabled;
@@ -95,7 +95,7 @@ namespace Rocket.Core.Serialization
 
         [XmlElement("MaxFrames")]
         public int MaxFrames = 60;
-        
+
         public void LoadDefaults()
         {
             RCON = new RemoteConsole();

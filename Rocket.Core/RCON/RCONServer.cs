@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading;
+﻿using Rocket.API;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
+using System.Threading;
 using UnityEngine;
-using Rocket.API;
 using Logger = Rocket.Core.Logging.Logger;
 
 namespace Rocket.Core.RCON
@@ -176,7 +176,7 @@ namespace Rocket.Core.RCON
         {
             lock (commands)
             {
-                while(commands.Count!=0)
+                while (commands.Count != 0)
                     R.Commands.Execute(new ConsolePlayer(), commands.Dequeue());
             }
         }

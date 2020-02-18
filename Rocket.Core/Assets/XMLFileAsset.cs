@@ -1,7 +1,6 @@
-﻿using Rocket.Core.Assets;
+﻿using Rocket.API;
 using System;
 using System.IO;
-using Rocket.API;
 using System.Xml.Serialization;
 
 namespace Rocket.Core.Assets
@@ -40,7 +39,7 @@ namespace Rocket.Core.Assets
                             instance = defaultInstance;
                         }
                     }
-                    serializer.Serialize(writer,instance);
+                    serializer.Serialize(writer, instance);
                     return instance;
                 }
             }
@@ -72,6 +71,6 @@ namespace Rocket.Core.Assets
                 throw new Exception($"Failed to deserialize XMLFileAsset: {file}", ex);
             }
         }
-        
+
     }
 }

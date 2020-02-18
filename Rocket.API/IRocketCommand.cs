@@ -13,6 +13,6 @@ namespace Rocket.API
         List<string> Aliases { get; }
         List<string> Permissions { get; }
 
-        void Execute(IRocketPlayer caller, string[] command); 
+        void Execute(IRocketPlayer caller, string[] command);
     }
 }

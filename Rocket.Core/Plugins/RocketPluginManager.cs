@@ -1,12 +1,12 @@
 ﻿using Rocket.API;
+using Rocket.Core.Extensions;
 using Rocket.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using System.Linq;
-using Rocket.Core.Extensions;
 
 namespace Rocket.Core.Plugins
 {
@@ -35,7 +35,8 @@ namespace Rocket.Core.Plugins
             return plugins.Select(g => g.GetComponent<IRocketPlugin>()).Where(p => p != null && ((IRocketPlugin)p).Name == name).FirstOrDefault();
         }
 
-        private void Awake() {
+        private void Awake()
+        {
             AppDomain.CurrentDomain.AssemblyResolve += delegate (object sender, ResolveEventArgs args)
             {
                 string file;
@@ -64,10 +65,10 @@ namespace Rocket.Core.Plugins
         private void loadPlugins()
         {
             libraries = GetAssembliesFromDirectory(Environment.LibrariesDirectory);
-            foreach(KeyValuePair<string,string> pair in GetAssembliesFromDirectory(Environment.PluginsDirectory))
+            foreach (KeyValuePair<string, string> pair in GetAssembliesFromDirectory(Environment.PluginsDirectory))
             {
-                if(!libraries.ContainsKey(pair.Key))
-                    libraries.Add(pair.Key,pair.Value);
+                if (!libraries.ContainsKey(pair.Key))
+                    libraries.Add(pair.Key, pair.Value);
             }
 
             pluginAssemblies = LoadAssembliesFromDirectory(Environment.PluginsDirectory);
@@ -81,10 +82,11 @@ namespace Rocket.Core.Plugins
             OnPluginsLoaded.TryInvoke();
         }
 
-        private void unloadPlugins() {
-            for(int i = plugins.Count; i > 0; i--)
+        private void unloadPlugins()
+        {
+            for (int i = plugins.Count; i > 0; i--)
             {
-                Destroy(plugins[i-1]);
+                Destroy(plugins[i - 1]);
             }
             plugins.Clear();
         }

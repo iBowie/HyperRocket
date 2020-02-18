@@ -1,5 +1,4 @@
-﻿using Rocket.Core.Logging;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Rocket.Core.Utils

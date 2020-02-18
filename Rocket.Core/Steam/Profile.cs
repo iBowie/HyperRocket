@@ -86,7 +86,7 @@ namespace Rocket.Core.Steam
                 IsVacBanned = doc["profile"]["vacBanned"]?.ParseBool(); field = "IsVacBanned";
                 TradeBanState = doc["profile"]["tradeBanState"]?.ParseString(); field = "TradeBanState";
                 IsLimitedAccount = doc["profile"]["isLimitedAccount"]?.ParseBool(); field = "IsLimitedAccount";
-                 
+
                 CustomURL = doc["profile"]["customURL"]?.ParseString(); field = "CustomURL";
                 MemberSince = doc["profile"]["memberSince"]?.ParseDateTime(new CultureInfo("en-US", false)); field = "MemberSince";
                 HoursPlayedLastTwoWeeks = doc["profile"]["hoursPlayed2Wk"]?.ParseDouble(); field = "HoursPlayedLastTwoWeeks";
@@ -108,7 +108,7 @@ namespace Rocket.Core.Steam
                         newMostPlayedGame.LogoSmall = mostPlayedGame["gameLogoSmall"]?.ParseUri(); field = "MostPlayedGame.LogoSmall";
                         newMostPlayedGame.HoursPlayed = mostPlayedGame["hoursPlayed"]?.ParseDouble(); field = "MostPlayedGame.HoursPlayed";
                         newMostPlayedGame.HoursOnRecord = mostPlayedGame["hoursOnRecord"]?.ParseDouble(); field = "MostPlayedGame.HoursOnRecord";
-                        MostPlayedGames.Add(newMostPlayedGame); 
+                        MostPlayedGames.Add(newMostPlayedGame);
                     }
                 }
 

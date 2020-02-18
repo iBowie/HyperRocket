@@ -1,6 +1,6 @@
-﻿using System.Net.Sockets;
+﻿using System;
 using System.Linq;
-using System;
+using System.Net.Sockets;
 
 namespace Rocket.Core.RCON
 {
