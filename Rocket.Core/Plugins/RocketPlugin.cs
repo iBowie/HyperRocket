@@ -17,11 +17,7 @@ namespace Rocket.Core.Plugins
 
         public RocketPlugin() : base()
         {
-            string configurationFile;
-            if (R.Settings.Instance.ForceJSON)
-                configurationFile = Path.Combine(Directory, string.Format(Core.Environment.HyperPluginConfigurationFileTemplate, Name));
-            else
-                configurationFile = Path.Combine(Directory, string.Format(Core.Environment.PluginConfigurationFileTemplate, Name));
+            string configurationFile = Path.Combine(Directory, string.Format(Core.Environment.PluginConfigurationFileTemplate, Name));
 
             string url = "";
             
@@ -34,17 +30,11 @@ namespace Rocket.Core.Plugins
             Uri uri;
             if (Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
-                if (R.Settings.Instance.ForceJSON)
-                    Configuration = new WebJSONFileAsset<RocketPluginConfiguration>(uri, (IAsset<RocketPluginConfiguration> asset) => { base.LoadPlugin(); });
-                else
-                    Configuration = new WebXMLFileAsset<RocketPluginConfiguration>(uri, null, (IAsset<RocketPluginConfiguration> asset) => { base.LoadPlugin(); });
+                Configuration = new WebXMLFileAsset<RocketPluginConfiguration>(uri, null, (IAsset<RocketPluginConfiguration> asset) => { base.LoadPlugin(); });
             }
             else
             {
-                if (R.Settings.Instance.ForceJSON)
-                    Configuration = new JSONFileAsset<RocketPluginConfiguration>(configurationFile);
-                else
-                    Configuration = new XMLFileAsset<RocketPluginConfiguration>(configurationFile);
+                Configuration = new XMLFileAsset<RocketPluginConfiguration>(configurationFile);
             }
         }
 

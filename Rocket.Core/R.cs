@@ -69,7 +69,7 @@ namespace Rocket.Core
                     if(Settings.Instance.RCON.Enabled) gameObject.TryAddComponent<RCONServer>();
                 };
                 
-                Settings = new JSONFileAsset<RocketSettings>(Environment.SettingsFile);
+                Settings = new XMLFileAsset<RocketSettings>(Environment.SettingsFile);
                 Translation = new XMLFileAsset<TranslationList>(String.Format(Environment.TranslationFile, Settings.Instance.LanguageCode), new Type[] { typeof(TranslationList), typeof(TranslationListEntry) }, defaultTranslations);
                 defaultTranslations.AddUnknownEntries(Translation);
                 Permissions = gameObject.TryAddComponent<RocketPermissionsManager>();

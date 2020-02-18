@@ -20,7 +20,7 @@ namespace Rocket.Core.Commands
         private readonly List<RegisteredRocketCommand> commands = new List<RegisteredRocketCommand>();
         internal List<RocketCommandCooldown> cooldown = new List<RocketCommandCooldown>();
         public ReadOnlyCollection<RegisteredRocketCommand> Commands { get; internal set; }
-        private JSONFileAsset<RocketCommands> commandMappings;
+        private XMLFileAsset<RocketCommands> commandMappings;
 
         public delegate void ExecuteCommand(IRocketPlayer player, IRocketCommand command, ref bool cancel);
         public event ExecuteCommand OnExecuteCommand;
@@ -34,7 +34,7 @@ namespace Rocket.Core.Commands
         private void Awake()
         {
             Commands = commands.AsReadOnly();
-            commandMappings = new JSONFileAsset<RocketCommands>(Environment.CommandsFile);
+            commandMappings = new XMLFileAsset<RocketCommands>(Environment.CommandsFile);
             checkCommandMappings();
             R.Plugins.OnPluginsLoaded += Plugins_OnPluginsLoaded;
         }

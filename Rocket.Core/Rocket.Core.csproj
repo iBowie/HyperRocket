@@ -48,10 +48,6 @@
     <ApplicationManifest>Rocket.Core.nuspec</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -65,8 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\JSONFileAsset.cs" />
-    <Compile Include="Assets\WebJSONFileAsset.cs" />
     <Compile Include="Commands\CommandRFlush.cs" />
     <Compile Include="Commands\CommandRKick.cs" />
     <Compile Include="Commands\CommandRWho.cs" />
@@ -79,7 +73,6 @@
     <Compile Include="Logging\ELogType.cs" />
     <Compile Include="Commands\RocketCommandCooldown.cs" />
     <Compile Include="Permissions\RocketPermissionsHelper.cs" />
-    <Compile Include="Plugins\HyperRocketPlugin.cs" />
     <Compile Include="Plugins\RocketPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Assets\Asset.cs" />

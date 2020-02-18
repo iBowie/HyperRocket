@@ -1,7 +1,6 @@
-﻿using Rocket.Core.Assets;
-using System;
-using Rocket.API;
+﻿using Rocket.API;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Rocket.Core.Serialization
 {
@@ -12,6 +11,8 @@ namespace Rocket.Core.Serialization
             CommandMappings = new List<CommandMapping>();
         }
 
+        [XmlArray("Commands")]
+        [XmlArrayItem("Command")]
         public List<CommandMapping> CommandMappings = new List<CommandMapping>();
     }
 }
